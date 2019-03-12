@@ -1,0 +1,21 @@
+
+<hr style="border: 0.01px solid black">
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <p> <a href="<c:url value='#'/>"><fmt:message key="privacy" /></a>
+                    &nbsp;&nbsp;::&nbsp;&nbsp;
+                    <a href="<c:url value='#'/>"><fmt:message key="contact" /></a>
+                    &nbsp;&nbsp;&copy;&nbsp;&nbsp;
+                    2018 Sell Now
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,69 @@
+/*
+ * Start Bootstrap - Heroic Features (http://startbootstrap.com/)
+ * Copyright 2013-2016 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
+ */
+
+body {
+    padding-top: 10px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+    background-color: #F7F7E9;
+}
+nav{
+    height: 80px;
+}
+
+.lightBlue { background-color: #edf8f7 }
+
+/* unvisited link */
+.navbar-fixed-top .navbar-nav > li >a:link{
+    color: #030911;
+}
+
+
+/* visited link */
+.navbar-fixed-top .navbar-nav > li >a:visited{
+    color: #0418ef;
+}
+
+
+/* mouse over link */
+.navbar-fixed-top .navbar-nav > li >a:hover{
+    color: #8b878e;
+}
+
+
+/* selected link */
+.navbar-fixed-top .navbar-nav > li >a:active{
+    color: #b235a8;
+}
+ 
+
+.navbar-brand{
+    padding: 0;
+}
+
+.navbar-brand>img{
+    height: 100%;
+    padding: 1px;
+    width: auto;
+}
+.navbar-inverse{
+    background-color: #F7F7E9;
+    color: gray;
+}
+.hero-spacer {
+    margin-top: 20px;
+    background-color: #D3EDE8;
+}
+
+.hero-feature {
+    margin-bottom: 30px;
+}
+
+footer {
+    margin: 50px 0;
+}
+
+#bs-example-navbar-collapse-1 >ul > li {
+    margin-top: 20px;
+}

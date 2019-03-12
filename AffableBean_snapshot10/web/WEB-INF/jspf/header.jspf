@@ -1,0 +1,241 @@
+
+
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<%-- Set language based on user's choice --%>
+<c:if test="${!empty language}">
+    <fmt:setLocale value="${language}" scope="session" />
+</c:if>
+
+
+<%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+    "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+    <head>
+        <!--        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+                <link rel="stylesheet" type="text/css" href="css/affablebean.css">
+                 Bootstrap Core CSS 
+            <link href="css/bootstrap.min.css" rel="stylesheet">
+        
+             Custom CSS 
+            <link href="css/heroic-features.css" rel="stylesheet">
+                <link rel="shortcut icon" href="img/favicon.ico">
+        
+                <script src="js/jquery-1.4.2.js" type="text/javascript"></script>
+                <script src="js/jquery-ui-1.8.4.custom.min.js" type="text/javascript"></script>
+                
+                [if lt IE 9]>
+                <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+                <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+            <![endif]-->
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <!-- Bootstrap Core CSS -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <link href="css/heroic-features.css" rel="stylesheet">
+        <link rel="shortcut icon" href="img/favicon.ico">
+
+        <!-- jQuery -->
+        <script src="js/jquery.js"></script>
+
+        <!-- Bootstrap Core JavaScript -->
+        <script src="js/bootstrap.min.js"></script>
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('a.categoryButton').hover(
+                        function () {
+                            $(this).animate({backgroundColor: '#b2d2d2'})
+                        },
+                        function () {
+                            $(this).animate({backgroundColor: '#d3ede8'})
+                        }
+                );
+
+                $('div.categoryBox').hover(over, out);
+
+                function over() {
+                    var span = this.getElementsByTagName('span');
+                    $(span[0]).animate({opacity: 0.3});
+                    $(span[1]).animate({color: 'white'});
+
+                }
+
+                function out() {
+                    var span = this.getElementsByTagName('span');
+                    $(span[0]).animate({opacity: 0.7});
+                    $(span[1]).animate({color: '#444'});
+                }
+            });
+        </script>
+
+        <title><fmt:message key='title' /></title>
+    </head>
+    <body>
+        <div id="main">
+            <nav class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+                <div class="container">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>                        
+                        <a class="navbar-brand" href="<c:url value='/'/>"><img class="img-thumbnail" src="img/logo.png" style="width: 100px;height: 80px"></a>
+                    </div>
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li>
+                                <a href="#">
+                                <span class="glyphicon glyphicon-shopping-cart"></span>
+                                <span class="horizontalMargin">
+                                    <c:choose>
+                                        <c:when test="${cart.numberOfItems == null}">
+                                            0
+                                        </c:when>
+                                        <c:otherwise>
+                                            ${cart.numberOfItems}
+                                        </c:otherwise>
+                                    </c:choose>
+
+                                    <%-- Handle singular/plural forms of 'item' --%>
+                                    <c:choose>
+                                        <c:when test="${cart.numberOfItems == 1}">
+                                            <fmt:message key="item" />
+                                        </c:when>
+                                        <c:when test="${cart.numberOfItems == 2 ||
+                                                        cart.numberOfItems == 3 ||
+                                                        cart.numberOfItems == 4}">
+                                            <fmt:message key="items2-4" />
+                                        </c:when>
+                                        <c:otherwise>
+                                            <fmt:message key="items" />
+                                        </c:otherwise>
+                                    </c:choose>
+                                </span>
+                                </a>
+                            
+                            </li>
+
+                            <li>
+                                <c:if test="${!empty cart && cart.numberOfItems != 0 &&
+
+                                              !fn:contains(pageContext.request.servletPath,'/cart') &&
+                                              requestScope['javax.servlet.forward.servlet_path'] ne '/cart'}">
+
+                                      <a href="<c:url value='viewCart'/>"><fmt:message key="cart" /></a>
+
+                                </c:if>
+                            </li>
+
+                            <li>
+                                <c:if test="${!empty cart && cart.numberOfItems != 0 &&
+
+                                              !fn:contains(pageContext.request.servletPath,'/checkout') &&
+                                              requestScope['javax.servlet.forward.servlet_path'] ne '/checkout' &&
+
+                                              !fn:contains(pageContext.request.servletPath,'/cart') &&
+                                              requestScope['javax.servlet.forward.servlet_path'] ne '/cart' &&
+
+                                              validationErrorFlag ne true &&
+                                              orderFailureFlag ne true}">
+
+                                      <a href="<c:url value='checkout'/>"><fmt:message key="proceedCheckout"/></a>
+
+                                </c:if>
+                            </li>
+                        </ul>
+
+                        <ul class="nav navbar-nav navbar-right">
+                             <li><a href="insert.jsp"><span class="glyphicon glyphicon-plus"></span><fmt:message key="sellitem" /> </a></li>
+                            <li><a href="<c:url value='admin'/>"><span class="glyphicon glyphicon-log-in"></span><fmt:message key="adminlogin" /></a></li>
+                            <%-- If servlet path contains '/confirmation', do not display language toggle --%>
+                            <c:if test="${!fn:contains(pageContext.request.servletPath,'/confirmation')}">
+
+                                <%-- language selection widget --%>
+                                <c:choose>
+                                    <%-- When user hasn't explicitly set language,
+                                    render toggle according to browser's preferred locale --%>
+                                    <c:when test="${empty sessionScope['javax.servlet.jsp.jstl.fmt.locale.session']}">
+                                        <c:choose>
+                                            <c:when test="${pageContext.request.locale.language ne 'sw'}">
+                                                English
+                                            </c:when>
+                                            <c:otherwise>
+                                                <c:url var="url" value="chooseLanguage">
+                                                    <c:param name="language" value="en"/>
+                                                </c:url>
+                                                <li><a href="${url}"><span class="glyphicon glyphicon-flag"></span> English |</a></li>
+                                                </c:otherwise>
+                                            </c:choose> |
+
+                                        <c:choose>
+                                            <c:when test="${pageContext.request.locale.language eq 'sw'}">
+                                                Kiswahili
+                                            </c:when>
+                                            <c:otherwise>
+                                                <c:url var="url" value="chooseLanguage">
+                                                    <c:param name="language" value="sw"/>
+                                                </c:url>
+                                                <li><a href="${url}">Kiswahili </a></li>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </c:when>
+
+                                    <%-- Otherwise, render widget according to the set locale --%>
+                                    <c:otherwise>
+                                        <c:choose>
+                                            <c:when test="${sessionScope['javax.servlet.jsp.jstl.fmt.locale.session'] ne 'sw'}">
+                                                English
+                                            </c:when>
+                                            <c:otherwise>
+                                                <c:url var="url" value="chooseLanguage">
+                                                    <c:param name="language" value="en"/>
+                                                </c:url>
+                                                <li><a href="${url}"><span class="glyphicon glyphicon-flag"></span> English |</a></li>
+                                                </c:otherwise>
+                                            </c:choose> |
+
+                                        <c:choose>
+                                            <c:when test="${sessionScope['javax.servlet.jsp.jstl.fmt.locale.session'] eq 'sw'}">
+                                                Kiswahili
+                                            </c:when>
+                                            <c:otherwise>
+                                                <c:url var="url" value="chooseLanguage">
+                                                    <c:param name="language" value="sw"/>
+                                                </c:url>
+                                                <li><a href="${url}">Kiswahili </a></li>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </c:otherwise>
+                                    </c:choose>
+
+                            </c:if>
+                        </ul>
+                    </div>
+                    <!-- /.navbar-collapse -->
+                </div>
+                <!-- /.container -->
+
+            </nav>
